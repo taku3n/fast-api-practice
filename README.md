@@ -9,7 +9,7 @@ This is a repository for fast api practice.
 ## usase
 
 ```sh
-git pull https://github.com/taku3n/fast-api-practice.git
+git clone https://github.com/taku3n/fast-api-practice.git
 docker-compose build
 docker-compose up
 ```
