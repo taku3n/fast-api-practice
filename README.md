@@ -11,6 +11,7 @@ This is a repository for fast api practice.
 ```sh
 git clone https://github.com/taku3n/fast-api-practice.git
 docker-compose build
+docker-compose run --entrypoint "poetry install" demo-app
 docker-compose up
 ```
 
