@@ -21,7 +21,7 @@ async def async_client() -> AsyncClient:
         autocommit=False, autoflush=False, bind=async_engine, class_=AsyncSession
     )
 
-    # テスト用にオンメモリのSQLiteテーブルを初期化する(関数ごとにリセットする)
+     # テスト用にオンメモリのSQLiteテーブルを初期化する(関数ごとにリセットする)
     async with async_engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
@@ -30,7 +30,7 @@ async def async_client() -> AsyncClient:
     async def get_test_db():
         async with async_session() as session:
             yield session
-    
+
     app.dependency_overrides[get_db] = get_test_db
 
     # テスト用に非同期HTTPクライアントを返却
@@ -40,7 +40,7 @@ async def async_client() -> AsyncClient:
 
 @pytest.mark.asyncio
 async def test_create_and_read(async_client):
-    response = await async_client.post("/tests", json={"title": "テストタスク"})
+    response = await async_client.post("/tasks", json={"title": "テストタスク"})
     assert response.status_code == starlette.status.HTTP_200_OK
     response_obj = response.json()
     assert response_obj["title"] == "テストタスク"
@@ -74,4 +74,4 @@ async def test_done_flag(async_client):
 
     # 既に完了フラグがはずれているときは400を返却
     response = await async_client.delete("/tasks/1/done")
-    assert response.status_coee == starlette.status.HTTP_404_NOT_FOUND
+    assert response.status_code == starlette.status.HTTP_404_NOT_FOUND
